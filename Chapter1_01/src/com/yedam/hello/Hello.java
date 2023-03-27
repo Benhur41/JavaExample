@@ -1,0 +1,9 @@
+package com.yedam.hello;
+
+public class Hello {
+
+	public static void main(String[] args) {
+
+	}
+
+}
