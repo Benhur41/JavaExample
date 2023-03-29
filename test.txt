@@ -1,3 +1,32 @@
+git 설정
+git config --global user.name "이름"
+git config --global user.email "깃 이메일"
+
+git 저장소 만들기
+cmd >
+cd 저장소 만들고 싶은 위치 
+git clone [저장소URL] [폴더이름]
+
+저장소 연결
+gir add remote add origin [저장소URL]
+
+작업파일 푸시
+git init
+git add (스테이징할 파일) 혹은 (.)//파일내 모든 데이터
+git commit -m "[commit message ]"
+혼자작업시)
+git push origin main//브런치 이름
+
+팀작업시)
+git checkout -b (새로운 브런치 이름)
+git push origin (새로운 브런치 이름)
+
+후에 깃허브에서 compare & pull request 작업
+
+
+
+
+----------------------------------------------------------------------
 pull 안될 때 
 https://gdtbgl93.tistory.com/63 
 https://velog.io/@rain98/%EA%B9%83%ED%97%88%EB%B8%8C-non-fast-forward-%EC%97%90%EB%9F%AC-%ED%95%B4%EA%B2%B0%ED%95%98%EA%B8%B0 
@@ -5,3 +34,4 @@ https://velog.io/@rain98/%EA%B9%83%ED%97%88%EB%B8%8C-non-fast-forward-%EC%97%90%
 git clone [url] [폴더명] 시 오류
 > fatal: Too many arguments.
 폴더명에 스페이스 있어서 생김
+
