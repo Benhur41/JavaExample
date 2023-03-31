@@ -51,6 +51,7 @@ public class Main {
 		int j = 0;
 		int l = 0;
 		int[] maxCount = null;
+		int[] count = null;
 		while (run) {
 			System.out.println("===1. 주사위 크기 2. 주사위 굴리기 3. 결과 보기 4. 가장 많이 나온 수 5. 종료 ===");
 			System.out.println("메뉴>");
@@ -77,27 +78,23 @@ public class Main {
 				System.out.println(Arrays.toString(dice));
 				System.out.println("5가 나오기 까지 "+dice.length+" 번 굴렸습니다.");
 			} else if (selectNo == 3) {
-				for(int i = 1 ; i<= dice.length ; i++) {
-					int checkdice = 0;
-					for(int k = 0 ; k<dice.length ; k++) {
-						if(i == dice[k]) {
-							checkdice++;
-						}
-					}
-					System.out.println(i + "은" + checkdice + " 번 나왔습니다.");
-					maxCount[i-1] = checkdice;
+				count = new int[number];
+				for(int i = 0 ; i < dice.length ; i ++) {
+					count[dice[i]-1]++;
+				}
+				for(int i = 0 ; i < count.length ; i++) {
+					System.out.println((i+1) + "은 " +count[i]+ "번 나왔습니다.");
 				}
 			} else if (selectNo == 4) {
-				int max = 0;
-				for(int m = 0 ; m<maxCount.length ; m ++) {
-					if(maxCount[m] > max ) {
-						max = maxCount[m];
+				int max = count[0];
+				for(int i = 0 ; i < count.length ; i++) {
+					if(max < count.length) {
+						max = count[i];
 					}
 				}
-				for(int m = 0 ; m<maxCount.length ; m ++) {
-					if(max == maxCount[m]) {
-						System.out.println("가장 많이 나온 수는 "+ (m+1) + "입니다");
-						break;
+				for(int i = 0 ; i < count.length ; i++) {
+					if(max == count[i]) {
+						System.out.println("가장많이 나온 수는" + (i+1) + " 입니다.");
 					}
 				}
 			} else if (selectNo == 5) {
