@@ -48,9 +48,6 @@ public class Main {
 		int[] dice = null;
 		boolean run = true;
 		int number = 0;
-		int j = 0;
-		int l = 0;
-		int[] maxCount = null;
 		int[] count = null;
 		while (run) {
 			System.out.println("===1. 주사위 크기 2. 주사위 굴리기 3. 결과 보기 4. 가장 많이 나온 수 5. 종료 ===");
@@ -60,7 +57,6 @@ public class Main {
 			if (selectNo == 1) {
 				System.out.println("주사위 크기>");
 				number = Integer.parseInt(sc.nextLine());
-				maxCount = new int[number];
 			} else if (selectNo == 2) {
 				String str = "";
 				while(true) {
@@ -87,16 +83,14 @@ public class Main {
 				}
 			} else if (selectNo == 4) {
 				int max = count[0];
+				int index = 0;
 				for(int i = 0 ; i < count.length ; i++) {
-					if(max < count.length) {
+					if(max < count[i]) {
 						max = count[i];
+						index = i ;
 					}
 				}
-				for(int i = 0 ; i < count.length ; i++) {
-					if(max == count[i]) {
-						System.out.println("가장많이 나온 수는" + (i+1) + " 입니다.");
-					}
-				}
+				System.out.println("가장많이 나온 수는" + (index+1) + " 입니다.");
 			} else if (selectNo == 5) {
 				System.out.println("프로그램 종료");
 				run = false;
