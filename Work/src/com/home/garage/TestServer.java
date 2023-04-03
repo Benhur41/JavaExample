@@ -3,8 +3,8 @@ package com.home.garage;
 public class TestServer {
 
 	public static void main(String[] args) {
-		User1 user = new User1();
-		user.fight(new Monster1());
+		Town town = new Town();
+		town.storyGoing();
 	}
 
 }
@@ -12,10 +12,12 @@ public class TestServer {
 class Product {
 	String name;
 	int productNum;
+	int price;
 	
-	Product (String name , int productNum){
+	Product (String name , int productNum,int price){
 		this.name = name;
 		this.productNum = productNum;
+		this.price = price;
 	}
 }
 
@@ -24,20 +26,36 @@ class Store{
 	
 	Store(){
 		this.list = new Product[3];
-		list[0]=new Product("포션" , 3);
-		list[1]=new Product("방어구" ,3);
-		list[2]=new Product("검" , 3);
+		list[0]=new Product("포션" , 3,5);
+		list[1]=new Product("방어구" ,3,10);
+		list[2]=new Product("검" , 3,10);
 	}
 	}
 
 
 class Town{
-	Store store = new Store();
 	
 	void storyGoing () {
+		User1 user = new User1();
+		boolean run2 = true; 
+		while(run2) {
 		System.out.println("마을에 도착했습니다 . 무엇을 하시겠습니까?");
-		System.out.println("");
+		System.out.println(" 1. 금지된 숲으로 들어가기 | 2. 상점  | 3. 게임종료 ");
+		int num = UtilScan.utilInt();
+		switch(num) {
+		case 1:
+			user.fight(new Monster1());
+			break;
+		case 2: 
+			Working.storeAct(user);
+			break;
+		case 3:
+			System.out.println("게임을 종료합니다.");
+			run2 = false;
+			break;
+		}
 	}
+}
 	
 	
 	
@@ -93,9 +111,9 @@ class User1 {
 			System.out.printf("\n%s 과 마주했습니다!!!\n\n",monster.name);
 			while(run) {
 				if(this.life > 0) {
-					System.out.printf("%s 의 체력 : %.1f 공격력 : %.1f\n" , this.name , this.life , this.attack);
+					System.out.printf("%s 의 체력 : %.1f 공격력 : %.1f 방어력 : %d \n" , this.name , this.life , this.attack,this.armor);
 					System.out.printf("%s 체력 : %.1f  공격력 : %.1f \n\n",monster.name ,monster.life , monster.attack);
-					System.out.println(" 1 . 공격  |  2. 상태창!!!  | 3. 아이템 가방 | 4. 도망 ");
+					System.out.println(" 1 . 공격  |  2. 상태창!!!  | 3. 포션 사용 | 4. 도망 ");
 					int selectNo = UtilScan.utilInt();
 					
 					switch(selectNo) {
@@ -114,15 +132,23 @@ class User1 {
 							break;
 						}else {
 							System.out.printf("몬스터의 체력이 %.1f 남았습니다! \n",lastLife);
-							System.out.printf("몬스터가 공격합니다!! %.1f 의 공격을 받습니다 ! \n",monster.attack);
-							this.life = this.life - monster.attack;
+							System.out.printf("몬스터가 공격합니다!! %.1f 의 공격을 받습니다 ! \n",monster.attack - this.armor);
+							this.life = this.life - (monster.attack-this.armor);
 							break;
 						}
 					case 2:
 						status();
 						break;
 					case 3:
-						//아이템가방
+						if(this.potion >0) {
+						System.out.println("포션을 사용합니다.");
+						this.potion -=1;
+						this.life +=5;
+						break;
+						}else {
+							System.out.println("포션이 없는데요?");
+							break;
+						}
 					case 4:
 						int chance = (int)(Math.random()*2)+1;
 						if(chance == 1) {
@@ -147,7 +173,10 @@ class User1 {
 	}
 
 	public void status() {
-		System.out.printf("유저 이름 : %s \n  현재체력  :  %f 공격력  :  %f  방어력  :  %d  코인  :  %d \n" , this.name , this.life , this.attack , this.armor , this.money);
+		System.out.println("============================================================================");
+		System.out.printf("유저 이름 : %s \n\n 현재체력  :  %.1f 공격력  :  %.1f  방어력  :  %d  코인  :  %d \n\n" , this.name , this.life , this.attack , this.armor , this.money);
+		System.out.println("============================================================================");
+
 	}
 	
 }
