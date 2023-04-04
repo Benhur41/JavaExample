@@ -1,5 +1,7 @@
 package com.home.garage;
 
+import java.util.Scanner;
+
 public class TestServer {
 
 	public static void main(String[] args) {
@@ -21,8 +23,20 @@ class Product {
 	}
 }
 
+class UtilScan{
+	static Scanner sc = new Scanner(System.in);
+	
+	public static int utilInt() {
+		return Integer.parseInt(sc.nextLine());
+	}
+	
+	public static String utilLine() {
+		return sc.nextLine();
+	}
+}
+
 class Store{
-	Product[] list ;
+	static Product[] list ;
 	
 	Store(){
 		this.list = new Product[3];
@@ -45,7 +59,14 @@ class Town{
 		switch(num) {
 		case 1:
 			user.fight(new Monster1());
+			if(user.money ==500) {
+				System.out.println("마을에 평화가 찾아왔습니다!!");
+				System.out.println("게임 클리어!!");
+				run2 =false;
+				break;
+			}else {
 			break;
+			}
 		case 2: 
 			Working.storeAct(user);
 			break;
@@ -123,7 +144,14 @@ class User1 {
 						System.out.println();
 						double lastLife = monster.life - this.attack;
 						monster.life = lastLife;
-						if(lastLife <= 0 ) {
+						if(lastLife <= 0 && monster.king == "king"){
+							System.out.println("보스 몬스터를 해치웠습니다.");
+							System.out.println("500코인을 얻었습니다.");
+							this.money = 500;
+							run = false;
+							break;
+						}else if(lastLife <= 0 ) {
+							
 							System.out.printf("해치웠습니다 ! %d 코인을 얻습니다\n",monster.money);
 							this.count++;
 							System.out.printf("보스방까지 %d 회 더 \n" , 3-this.count);
@@ -132,7 +160,13 @@ class User1 {
 							break;
 						}else {
 							System.out.printf("몬스터의 체력이 %.1f 남았습니다! \n",lastLife);
-							System.out.printf("몬스터가 공격합니다!! %.1f 의 공격을 받습니다 ! \n",monster.attack - this.armor);
+							double damage;
+							if(armor >= monster.attack) {
+								 damage = 0;
+							}else {
+								 damage = monster.attack - this.armor;
+							}
+							System.out.printf("몬스터가 공격합니다!! %.1f 의 공격을 받습니다 ! \n",damage);
 							this.life = this.life - (monster.attack-this.armor);
 							break;
 						}
@@ -186,6 +220,7 @@ class Monster1 {
 	double life;
 	double attack;
 	int money;
+	String king;
 	
 	Monster1 () {
 		this.name = "초록버섯";
@@ -199,9 +234,11 @@ class Monster1 {
 class King extends Monster1{
 	
 	public King(){
-		this.name = "뿔버섯";
+		this.name = "[보스] 뿔버섯";
 		this.life = 15;
 		this.attack = 6;
+		this.king="king";
 		
 	}
 }
+

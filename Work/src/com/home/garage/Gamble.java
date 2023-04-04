@@ -1,4 +1,4 @@
-
+package com.home.garage;
 
 public class Gamble {
 
